@@ -20,6 +20,14 @@ const game = ()=> {
       const options = document.querySelectorAll(".options button");
       const playerHand = document.querySelector(".player-hand");
       const computerHand = document.querySelector(".computer-hand");
+      const hands = document.querySelectorAll ('.hands img');
+
+      // have the hands do the shake animation each round
+      hands.forEach(hand => {
+          hand.addEventListener('animationend', function() {
+              this.style.animation = '';
+          })
+      })
 
       //Need computer options to be randomly generated
       //Start with an array of the 3 options it can choose
@@ -34,14 +42,18 @@ const game = ()=> {
           const computerChoice = computerOptions[computerNumber];
           // console.log(computerChoice);
 
-          //Call the compareHands function each time
-          compareHands(this.textContent, computerChoice);
+          setTimeout(()=> {
+            //Call the compareHands function each time
+            compareHands(this.textContent, computerChoice);
 
-
-          // Update hand signal images
-          playerHand.src = `./assets/${this.textContent}.png`;
-          computerHand.src = `./assets/${computerChoice}.png`;
-
+            // Update hand signal images
+            playerHand.src = `./assets/${this.textContent}.png`;
+            computerHand.src = `./assets/${computerChoice}.png`;
+          }, 2000);
+          
+          // Add in the animation of the hands
+          playerHand.style.animation = 'shakePlayer 2s ease';
+          computerHand.style.animation = "shakeComputer 2s ease";
         });
       });  
     };
